@@ -1,0 +1,6 @@
+<h3>{{post.title}}</h3>
+{{post.date}}
+<br />
+{{post.body}}
+<a href="{% url 'home' %}">홈으로 돌아가기</a>
+<a href="{% url 'delete' post.id %}">수정하기</a>
