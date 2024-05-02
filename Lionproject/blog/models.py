@@ -1,5 +1,6 @@
 from django.db import models
 from django.utils import timezone
+from django.contrib.auth.models import AbstractUser
 
 # Create your models here.
 class HashTag(models.Model):
@@ -31,3 +32,8 @@ class Comment(models.Model):
 
     def __str__(self):
         return self.comment_text
+    
+# class CustomUser(AbstractUser):
+#     nickname=models.CharField(max_length=100)
+#     university=models.CharField(max_length=50)
+#     location=models.CharField(max_length=200)
