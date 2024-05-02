@@ -47,7 +47,7 @@ def update(request, post_id):
     else:
         return render(request, 'update.html', {'post': post_update})
     
-def add_commnet(request, post_id):
+def add_comment(request, post_id):
     blog= get_object_or_404(Post, pk=post_id)
     
     if request.method =='POST':
