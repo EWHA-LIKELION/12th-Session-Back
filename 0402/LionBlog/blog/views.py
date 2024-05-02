@@ -1,8 +1,25 @@
 from django.shortcuts import render,get_object_or_404, redirect
 from .models import Post
 from django.utils import timezone
-from .forms import PostForm
+from .forms import PostForm, CommentForm
 # Create your views here.
+
+
+def add_comment(request, post_id):
+    blog = get_object_or_404(Post,pk=post_id)
+
+    if request.method == 'POST':
+        form = CommentForm(request.POST)
+
+        if form.is_valid():
+            comment = form.save(commit=False)
+            comment.post = blog
+            comment.save()
+            return redirect('detail', post_id)
+        else:
+            form = CommentForm()
+        
+        return render(request, 'add_comment.html', {'form':form})
 
 def home(request):
     posts=Post.objects
@@ -10,7 +27,7 @@ def home(request):
 
 def detail(request,post_id):
     post_detail=get_object_or_404(Post,pk=post_id)
-    return render(request, 'detail.html', {'post':post_detail})
+    return render(request, 'detail.html', {'post':post_detail, 'hashtags':post_hashtag})
 
 def new(request):
     form=PostForm()
@@ -22,6 +39,11 @@ def create(request):
         new_post=form.save(commit=False)
         new_post.date=timezone.now()
         new_post.save()
+        hashtag=request.POST['hashtags']
+        hashtag=hashtags.split(",")
+        for tag in hashtag:
+            new_hashtag=HashTag.objects.get_or_create(hastag=tag)
+            new_post.hashtag.add(new_hashtag[0])
         return redirect('detail',new_post.id)
     return redirect('home')
 
