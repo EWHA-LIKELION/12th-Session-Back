@@ -14,10 +14,10 @@ class Post(models.Model):
         return self.body[:100]
     
 class Comment(models.Model):
-    post=models.ForeignKey(Post, realted_name='commnets', on_delete=models.CASCADE)
-    username=models.CharField(max_Length=20)
+    post=models.ForeignKey(Post, related_name='comments', on_delete=models.CASCADE)
+    username=models.CharField(max_length=20)
     comment_text=models.TextField()
-    created_at=models.DateTimeField(deefault=timezone.now)
+    created_at=models.DateTimeField(default=timezone.now)
 
     def apporve(self):
         self.save()
