@@ -27,7 +27,9 @@ def home(request):
 
 def detail(request,post_id):
     post_detail=get_object_or_404(Post,pk=post_id)
+    post_hashtag=post_detail.hashtag.all()
     return render(request, 'detail.html', {'post':post_detail, 'hashtags':post_hashtag})
+    r
 
 def new(request):
     form=PostForm()
@@ -39,8 +41,8 @@ def create(request):
         new_post=form.save(commit=False)
         new_post.date=timezone.now()
         new_post.save()
-        hashtag=request.POST['hashtags']
-        hashtag=hashtags.split(",")
+        hashtags=request.POST['hashtags']
+        hashtag=hashtags.split(", ")
         for tag in hashtag:
             new_hashtag=HashTag.objects.get_or_create(hastag=tag)
             new_post.hashtag.add(new_hashtag[0])
@@ -67,3 +69,5 @@ def update(request, post_id):
         return redirect('home')
     else:
         return render(request, 'update.html', {'post': post_update})
+
+
