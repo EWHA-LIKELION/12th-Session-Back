@@ -7,7 +7,7 @@ from .models import *
 from .serializers import *
 
 # Create your views here.
-
+# 냥
 
 class PostList(views.APIView):
     def get(self, request, format=None):
