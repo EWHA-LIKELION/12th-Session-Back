@@ -13,12 +13,13 @@ class Post(models.Model):
     date =models.DateTimeField('date published') 
     body =models.TextField()
     hashtag =models.ManyToManyField(HashTag)
+    photo =models.ImageField(blank=True, null=True, upload_to="post_photo")
 
-def __str__(self):
-    return self.title
+    def __str__(self):
+        return self.title
 
-def summary(self) :
-    return self.body[:50]
+    def summary(self) :
+        return self.body[:50]
 
 class Comment(models.Model):
     post=models.ForeignKey(Post, related_name='comments', on_delete=models.CASCADE)
