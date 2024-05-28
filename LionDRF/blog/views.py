@@ -53,3 +53,11 @@ class PostDetail(views.APIView):
     post = get_object_or_404(Post, pk=pk)
     post.delete()
     return Response({"message": "게시물 삭제 성공"})
+
+class CommentView(views.APIView):
+  def post(self, request, format=None):
+    serializer = CommentSerializer(data=request.data)
+    if serializer.is_valid():
+      serializer.save()
+      return Response(serializer.data)
+    return Response(serializer.errors)

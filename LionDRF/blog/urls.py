@@ -7,6 +7,7 @@ urlpatterns = [
     path('', PostList.as_view()),
     path('<int:pk>/', PostDetail.as_view()),
     path('create/',PostList.as_view()),
+    path('comments/', CommentView.as_view()),
 ]
 # 새로 생성해줘야하는 파일
 # url을 분리해주기 위함
