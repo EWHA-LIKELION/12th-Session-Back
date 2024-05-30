@@ -38,7 +38,7 @@ class PostDetail(views.APIView):
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data)
-        return Response(serializer.errors, status=status.HHTTP_400_BED_REQUST)
+        return Response(serializer.errors, status=status.HTTP_400_BED_REQUST)
     
     def patch(self, request, pk, format=None):
         post = self.get_object(pk)
@@ -46,9 +46,17 @@ class PostDetail(views.APIView):
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data)
-        return Response(serializer.errors, status=status.HHTTP_400_BED_REQUST)
+        return Response(serializer.errors, status=status.HTTP_400_BED_REQUST)
     
     def delete(self, request, pk, format=None):
         post=get_object_or_404(Post, pk=pk)
         post.delete()
         return Response({"message": "게시물 삭제 성공"})
+    
+class CommentView(views.APIView):
+    def post(self, request, format=None):
+        serializer=CommentSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        return Response(serializer.errors)
