@@ -21,3 +21,4 @@ class LoginView(views.APIView):
     if serializer.is_valid():
       return Response({'message': '로그인 성공', 'data': serializer.validated_data})
     return Response({'message': '로그인 실패', 'error': serializer.errors})
+  #ㅇㄹ
