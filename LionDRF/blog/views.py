@@ -9,6 +9,7 @@ from .serializers import *
 # Create your views here.
 # 냥
 
+
 class PostList(views.APIView):
     def get(self, request, format=None):
         post = Post.objects.all()
@@ -34,6 +35,7 @@ class PostDetail(views.APIView):
 
     def get(self, request, pk, format=None):
         post = self.get_object(pk)
+        print("dkdk")
         serializer = PostSerializer(post)
         return Response(serializer.data)
 
@@ -57,3 +59,12 @@ class PostDetail(views.APIView):
         post = get_object_or_404(Post, pk=pk)
         post.delete()
         return Response({"message": "게시물 삭제 성공"})
+
+
+class CommentView(views.APIView):
+    def post(self, request, format=None):
+        serializer = CommentSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        return Response(serializer.errors)
